@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
 
 class Quizzes(models.Model):
-    class Meta:
+    class Meta: 
         verbose_name = _("Quiz")
         verbose_name_plural = _("Quizzes")
         ordering = ["id"]
@@ -81,3 +81,6 @@ class Answer(Updated ):
     answer_text = models.CharField(
         max_length=255, verbose_name=_("Answer Text"))
     is_right = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.answer_text
