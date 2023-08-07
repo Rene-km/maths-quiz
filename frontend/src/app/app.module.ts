@@ -10,6 +10,9 @@ import { UserModule } from './user/user.module';
 import { HomePageComponent } from './home-page/home-page.component';
 
 
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,8 @@ import { HomePageComponent } from './home-page/home-page.component';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
-    UserModule
+    UserModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
