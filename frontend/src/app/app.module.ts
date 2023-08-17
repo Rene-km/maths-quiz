@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './layout/nav/nav.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import {HttpClientModule} from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { UserModule } from './user/user.module';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -25,6 +26,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
     UserModule,
+    HttpClientModule
     
   ],
   providers: [],

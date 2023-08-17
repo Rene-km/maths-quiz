@@ -19,6 +19,7 @@ class Quizzes(models.Model):
     category = models.ForeignKey(
         Category, default=1, on_delete=models.DO_NOTHING)
     date_created = models.DateTimeField(auto_now_add=True)
+    image = models.TextField(_("Image"), default="https://drive.google.com/file/d/1Mk6E-qj8Z_lJCPgdUEXbjgj3wsxvSJNH/view?usp=sharing")
 
     def __str__(self) -> str:
         return self.title

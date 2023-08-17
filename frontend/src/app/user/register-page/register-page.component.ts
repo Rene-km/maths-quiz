@@ -1,24 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { passwordMatchesValidator } from 'src/app/utils/password-matches';
+import { AuthService } from 'src/app/services/auth.service';
+import { Subscription, first } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
   styleUrls: ['./register-page.component.css']
 })
-export class RegisterPageComponent implements OnInit{
+export class RegisterPageComponent implements OnInit, OnDestroy{
 
   form: FormGroup;
   usernameRegex = /^[a-zA-Z0-9\-\.\_]+$/;
   nameRegex = /^[a-zA-Z\-]+$/;
+  private subscription: Subscription;
 
-
-  constructor(private fb: FormBuilder){}
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router){}
 
    
   ngOnInit() {
@@ -33,8 +36,7 @@ export class RegisterPageComponent implements OnInit{
       confirmPassword: ['', [Validators.required]]
     },
     {
-      updateOn: 'blur',
-      validators: [passwordMatchesValidator],
+      updateOn: 'blur'
     }
     
     );
@@ -102,7 +104,27 @@ export class RegisterPageComponent implements OnInit{
 
 
   onSubmit() {
-    console.log("Register Successful")
+    const formValue = { ...this.form.value };
+    delete formValue.confirmPassword;
+
+    this.auth.register(formValue).pipe(first()).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/welcome')
+      },
+      error: error => {
+        console.log(error);
+      }
+    })
+  
+
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from the subscription to prevent memory leaks
+    if (this.subscription) {
+      console.log("unsubscribed")
+      this.subscription.unsubscribe();
+    }
   }
   
 
